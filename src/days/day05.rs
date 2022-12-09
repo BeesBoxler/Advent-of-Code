@@ -124,7 +124,7 @@ mod test {
     static INPUT: &str = "    [D]    
 [N] [C]    
 [Z] [M] [P]
-    1   2   3 
+ 1   2   3 
 
 move 1 from 2 to 1
 move 3 from 1 to 3
@@ -136,7 +136,7 @@ move 1 from 1 to 2";
         let (containers, _) = parse_input(&INPUT.to_string());
         assert_eq!(
             containers,
-            vec!(vec!('N', 'Z'), vec!('D', 'C', 'M'), vec!('P'), vec!())
+            vec!(vec!('N', 'Z'), vec!('D', 'C', 'M'), vec!('P'))
         );
     }
 

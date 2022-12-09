@@ -1,9 +1,9 @@
 pub fn run(input: String) {
-    part_one(&input);
-    part_two(&input);
+    println!("Total score for part one: {}", part_one(&input));
+    println!("Total score for part two: {}", part_two(&input));
 }
 
-fn part_one(input: &String) {
+fn part_one(input: &String) -> u32 {
     let mut total = 0;
     input
         .split('\n')
@@ -23,10 +23,10 @@ fn part_one(input: &String) {
             _ => {}
         });
 
-    println!("Our incorrect score was {}", total);
+    total
 }
 
-fn part_two(input: &String) {
+fn part_two(input: &String) -> u32 {
     let mut total = 0;
     input
         .split('\n')
@@ -46,11 +46,24 @@ fn part_two(input: &String) {
             _ => {}
         });
 
-    println!("The correct score was {}", total);
+    total
 }
 
-/*
-A Y
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    static INPUT:&str = "A Y
 B X
-C Z
-*/
+C Z";
+
+    #[test]
+    fn part_one_returns_correct_output() {
+        assert_eq!(part_one(&INPUT.to_string()), 15);
+    }
+
+    #[test]
+    fn part_two_returns_correct_output() {
+        assert_eq!(part_two(&INPUT.to_string()), 12);
+    }
+}

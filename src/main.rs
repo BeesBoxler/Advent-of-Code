@@ -1,17 +1,30 @@
 mod days;
-use std::{fs, env, io::{self}};
+use std::{
+    env, fs,
+    io::{self},
+};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     let input;
 
-    if let Some(path) = args.get(1) {
+    let day = if let Some(day) = args.get(1) {
+        if let Ok(day) = day.parse::<u8>() {
+            Some(day)
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
+    if let Some(path) = args.get(2) {
         println!("Loading input file `{:?}`...", fs::canonicalize(path));
         input = match fs::read_to_string(path) {
-            Ok(i) => { i }
+            Ok(i) => i,
             _ => {
                 println!("Invalid file!\nExiting...");
-                return
+                return;
             }
         };
     } else {
@@ -27,6 +40,5 @@ fn main() {
         }
     }
 
-    
-    days::run_day(input);
+    days::run_day(input, day);
 }
