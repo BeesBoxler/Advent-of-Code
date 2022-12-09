@@ -48,11 +48,11 @@ fn part_two(mut containers: Vec<Container>, movements: &Vec<Movement>) -> String
     let mut temp = Vec::new();
 
     for (count, from, to) in movements {
-        draw_crates(
-            &containers,
-            format!("Move {:2} from {} to {}", count, from, to),
-            true,
-        );
+        // draw_crates(
+        //     &containers,
+        //     format!("Move {:2} from {} to {}", count, from, to),
+        //     true,
+        // );
         temp.clear();
 
         for _ in 0..*count {
@@ -64,7 +64,7 @@ fn part_two(mut containers: Vec<Container>, movements: &Vec<Movement>) -> String
             containers[to - 1].push(*value);
         }
     }
-    draw_crates(&containers, format!("Instructions complete."), true);
+    // draw_crates(&containers, format!("Instructions complete."), true);
 
     let mut result = Vec::new();
     for container in &containers {
