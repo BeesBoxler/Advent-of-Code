@@ -1,3 +1,4 @@
+use colored::Colorize;
 use regex::Regex;
 use std::vec;
 
@@ -47,6 +48,11 @@ fn part_two(mut containers: Vec<Container>, movements: &Vec<Movement>) -> String
     let mut temp = Vec::new();
 
     for (count, from, to) in movements {
+        draw_crates(
+            &containers,
+            format!("Move {:2} from {} to {}", count, from, to),
+            true,
+        );
         temp.clear();
 
         for _ in 0..*count {
@@ -58,6 +64,7 @@ fn part_two(mut containers: Vec<Container>, movements: &Vec<Movement>) -> String
             containers[to - 1].push(*value);
         }
     }
+    draw_crates(&containers, format!("Instructions complete."), true);
 
     let mut result = Vec::new();
     for container in &containers {
@@ -67,6 +74,36 @@ fn part_two(mut containers: Vec<Container>, movements: &Vec<Movement>) -> String
     }
 
     String::from_utf8(result).unwrap()
+}
+
+fn draw_crates(containers: &Vec<Container>, instruction: String, highlight_final: bool) {
+    print!("{esc}[?25l{esc}[2J{esc}[1;1H", esc = 27 as char);
+    for container in containers {
+        for i in 0..container.len() {
+            if i == container.len() - 1 && highlight_final {
+                print!(
+                    "{}",
+                    format!(
+                        "{}{}{}",
+                        "[".white(),
+                        container[i].to_string().white(),
+                        "]".white()
+                    )
+                    .on_blue()
+                );
+            } else {
+                print!("{}", format!("[{}]", container[i]).on_white());
+            }
+        }
+        println!();
+    }
+    println!("{}", instruction);
+    let mut child = std::process::Command::new("sleep")
+        .arg("0.01")
+        .spawn()
+        .unwrap();
+    let _result = child.wait().unwrap();
+    print!("{esc}[?25h", esc = 27 as char);
 }
 
 fn parse_input(input: &String) -> (Vec<Container>, Vec<Movement>) {
