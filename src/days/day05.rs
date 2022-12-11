@@ -76,6 +76,7 @@ fn part_two(mut containers: Vec<Container>, movements: &Vec<Movement>) -> String
     String::from_utf8(result).unwrap()
 }
 
+#[allow(dead_code)]
 fn draw_crates(containers: &Vec<Container>, instruction: String, highlight_final: bool) {
     print!("{esc}[?25l{esc}[2J{esc}[1;1H", esc = 27 as char);
     for container in containers {
