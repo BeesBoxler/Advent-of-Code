@@ -23,6 +23,7 @@ mod test {
     }
 
     #[test]
+    #[ignore]
     fn part_two_returns_correct_output() {
         assert_eq!(part_two(&INPUT.to_string()), 0);
     }
