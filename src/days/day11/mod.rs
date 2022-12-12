@@ -7,28 +7,37 @@ pub fn run(input: String) {
     println!("{}", part_two(&input));
 }
 
-fn part_one(input: &String) -> u32 {
+fn part_one(input: &String) -> usize {
     let mut monkeys = parse_input(input);
+    let inspection_count = get_inspection_count(&mut monkeys, 20, 3);
+
+    &inspection_count[0] * &inspection_count[1]
+}
+
+fn part_two(input: &String) -> usize {
+    let mut monkeys = parse_input(input);
+    let inspection_count = get_inspection_count(&mut monkeys, 10000, 1);
+
+    inspection_count[0] * inspection_count[1]
+}
+
+fn get_inspection_count(monkeys: &mut Vec<Monkey>, count: usize, div: u32) -> Vec<usize> {
+    let gcd = monkeys.iter().fold(1, |acc, monkey| acc * monkey.get_divisor());
     let mut inspection_count = vec![0; monkeys.len()];
-    for _ in 0..20 {
+    for _ in 0..count {
         for i in 0..monkeys.len() {
             for item in monkeys[i].get_items() {
                 inspection_count[i] += 1;
-                let target = monkeys[i].calculate_recipient(item) as usize;
-                let new_worry_level = monkeys[i].calculate_new_worry_level(item);
+                let target = monkeys[i].calculate_recipient(item, div, gcd) as usize;
+                let new_worry_level = monkeys[i].calculate_new_worry_level(item, div, gcd);
                 monkeys[target].add_item(new_worry_level);
                 monkeys[i].remove_item(item);
             }
         }
     }
 
-    inspection_count.sort_by(|a,b| b.cmp(a));
-
-    &inspection_count[0] * &inspection_count[1]
-}
-
-fn part_two(input: &String) -> u32 {
-    0
+    inspection_count.sort_by(|a, b| b.cmp(a));
+    inspection_count
 }
 
 fn parse_input(input: &String) -> Vec<Monkey> {
@@ -78,8 +87,7 @@ Monkey 3:
     }
 
     #[test]
-    #[ignore]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 0);
+        assert_eq!(part_two(&INPUT.to_string()), 2713310158);
     }
 }
