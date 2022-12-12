@@ -1,4 +1,5 @@
 mod days;
+mod utils;
 use std::{
     env, fs,
     io::{self},

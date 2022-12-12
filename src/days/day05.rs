@@ -99,11 +99,7 @@ fn draw_crates(containers: &Vec<Container>, instruction: String, highlight_final
         println!();
     }
     println!("{}", instruction);
-    let mut child = std::process::Command::new("sleep")
-        .arg("0.01")
-        .spawn()
-        .unwrap();
-    let _result = child.wait().unwrap();
+    crate::utils::wait("0.05");
     print!("{esc}[?25h", esc = 27 as char);
 }
 
