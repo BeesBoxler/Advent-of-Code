@@ -9,9 +9,10 @@ mod day08;
 mod day09;
 mod day10;
 mod day11;
+mod day12;
 
 pub fn run_day(input: String, day: Option<u8>) {
-    match day.unwrap_or(11) {
+    match day.unwrap_or(12) {
         1 => day01::run(input),
         2 => day02::run(input),
         3 => day03::run(input),
@@ -23,6 +24,7 @@ pub fn run_day(input: String, day: Option<u8>) {
         9 => day09::run(input),
         10 => day10::run(input),
         11 => day11::run(input),
+        12 => day12::run(input),
         _ => panic!("We haven't done that day yet!")
     }
 }

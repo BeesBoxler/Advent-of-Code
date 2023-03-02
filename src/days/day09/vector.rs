@@ -9,32 +9,32 @@ pub struct Vector {
 }
 
 impl Vector {
-    pub fn new(x: Number, y: Number) -> Vector {
-        Vector {
+    pub fn new(x: Number, y: Number) -> Self {
+        Self {
             x,
             y,
         }
     }
 
-    pub fn zero() -> Vector {
-        Vector::new(0,0)
+    pub fn zero() -> Self {
+        Self::new(0,0)
     }
 
-    pub fn add(&self, other: &Vector) -> Vector {
-        Vector {
+    pub fn add(&self, other: &Vector) -> Self {
+        Self {
             x: self.x + other.x,
             y: self.y + other.y
         }
     }
 
     pub fn scalar(&self, scale: Number) -> Vector {
-        Vector{
+        Self{
             x: self.x * scale,
             y: self.y * scale,
         }
     }
 
-    pub fn is_adjacent_to(&self, other: &Vector) -> bool {
+    pub fn is_adjacent_to(&self, other: &Self) -> bool {
         (self.x-1..=self.x+1).contains(&other.x)
             && (self.y-1..=self.y+1).contains(&other.y)
     }
@@ -43,7 +43,7 @@ impl Vector {
      * Mutating Functions
      */
 
-    pub fn add_in_place(&mut self, other: &Vector) {
+    pub fn add_in_place(&mut self, other: &Self) {
         self.x += other.x;
         self.y += other.y;
 
