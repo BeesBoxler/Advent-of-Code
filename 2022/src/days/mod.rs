@@ -25,6 +25,6 @@ pub fn run_day(input: String, day: Option<u8>) {
         10 => day10::run(input),
         11 => day11::run(input),
         12 => day12::run(input),
-        _ => panic!("We haven't done that day yet!")
+        _ => panic!("We haven't done that day yet!"),
     }
 }

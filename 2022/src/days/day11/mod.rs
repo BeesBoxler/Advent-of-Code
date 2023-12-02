@@ -22,7 +22,9 @@ fn part_two(input: &String) -> usize {
 }
 
 fn get_inspection_count(monkeys: &mut Vec<Monkey>, count: usize, div: u32) -> Vec<usize> {
-    let gcd = monkeys.iter().fold(1, |acc, monkey| acc * monkey.get_divisor());
+    let gcd = monkeys
+        .iter()
+        .fold(1, |acc, monkey| acc * monkey.get_divisor());
     let mut inspection_count = vec![0; monkeys.len()];
     for _ in 0..count {
         for i in 0..monkeys.len() {

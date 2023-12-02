@@ -9,8 +9,14 @@ type Path = HashSet<Vector>;
 type Bounds = [Vector; 2];
 
 pub fn run(input: String) {
-    println!("Tail of rope length two touches {} squares", part_one(&input));
-    println!("Tail of rope length nine touches {} squares", part_two(&input));
+    println!(
+        "Tail of rope length two touches {} squares",
+        part_one(&input)
+    );
+    println!(
+        "Tail of rope length nine touches {} squares",
+        part_two(&input)
+    );
 }
 
 fn part_one(input: &String) -> u32 {
@@ -53,12 +59,12 @@ fn calculate_rope(instructions: &Vec<Direction>, rope_length: usize) -> u32 {
         update_bounds(&rope[0], &mut bounds);
         tail_path.insert(rope[rope_length - 1].clone());
 
-        if !cfg!(test) && bounds[1].x - bounds[0].x < 160{    
+        if !cfg!(test) && bounds[1].x - bounds[0].x < 160 {
             draw_path(&tail_path, &bounds, Some(&rope));
         }
     }
 
-    if !cfg!(test) && bounds[1].x - bounds[0].x < 160{    
+    if !cfg!(test) && bounds[1].x - bounds[0].x < 160 {
         draw_path(&tail_path, &bounds, Some(&rope));
     }
 
@@ -106,7 +112,11 @@ fn draw_path(path: &Path, bounds: &Bounds, rope: Option<&Vec<Vector>>) {
         for i in (0..rope.len()).rev() {
             let x = (rope[i].x + delta_x) as usize;
             let y = (rope[i].y + delta_y) as usize;
-            let symbol = if i == 0 { 'H' } else {char::from((i + 48) as u8)};
+            let symbol = if i == 0 {
+                'H'
+            } else {
+                char::from((i + 48) as u8)
+            };
             field[y][x] = symbol;
         }
     }
