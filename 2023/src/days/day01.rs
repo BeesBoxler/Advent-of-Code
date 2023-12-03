@@ -26,22 +26,60 @@ fn part_two(input: &String) -> u32 {
         .lines()
         .map(|line| {
             let mut line = String::from(line);
-            for i in 0..line.len() - 1 {
-                if i <= line.len() {
-                    line.replace_range(
-                        0..i,
-                        &line[0..i]
-                            .replace("one", "1")
-                            .replace("two", "2")
-                            .replace("three", "3")
-                            .replace("four", "4")
-                            .replace("five", "5")
-                            .replace("six", "6")
-                            .replace("seven", "7")
-                            .replace("eight", "8")
-                            .replace("nine", "9"),
-                    );
+            let mut i = 1;
+            while i < line.len() {
+                let len = line.len();
+                let curr = *line.as_bytes().get(i - 1).unwrap_or(&0u8) as u32;
+                if curr > 47 && curr < 58 {
+                    break;
                 }
+                line.replace_range(
+                    0..i,
+                    &line[0..i]
+                        .replace("one", "1")
+                        .replace("two", "2")
+                        .replace("three", "3")
+                        .replace("four", "4")
+                        .replace("five", "5")
+                        .replace("six", "6")
+                        .replace("seven", "7")
+                        .replace("eight", "8")
+                        .replace("nine", "9"),
+                );
+                if line.len() != len {
+                    i = 1;
+                    continue;
+                }
+
+                i += 1;
+            }
+            i = 0;
+            while i < line.len() {
+                let len = line.len();
+
+                let j = len - i;
+                let curr = *line.as_bytes().get(j).unwrap_or(&0u8) as u32;
+                if curr > 47 && curr < 58 {
+                    break;
+                }
+                line.replace_range(
+                    j..len,
+                    &line[j..len]
+                        .replace("one", "1")
+                        .replace("two", "2")
+                        .replace("three", "3")
+                        .replace("four", "4")
+                        .replace("five", "5")
+                        .replace("six", "6")
+                        .replace("seven", "7")
+                        .replace("eight", "8")
+                        .replace("nine", "9"),
+                );
+                if line.len() != len {
+                    i = 0;
+                    continue;
+                }
+                i += 1;
             }
             line.push('\n');
             line

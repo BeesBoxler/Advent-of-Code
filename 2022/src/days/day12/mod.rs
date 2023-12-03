@@ -1,3 +1,4 @@
+#![allow(unused_imports, unused_variables, dead_code)]
 mod point;
 
 use crate::utils::clear_screen;
