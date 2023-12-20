@@ -3,7 +3,7 @@ pub fn run(input: String) {
     println!("{}", part_two(&input));
 }
 
-fn string_to_numbers(input: &String) -> u32 {
+fn string_to_numbers(input: &str) -> u32 {
     input
         .lines()
         .map(|line| {
@@ -17,11 +17,11 @@ fn string_to_numbers(input: &String) -> u32 {
         .sum()
 }
 
-fn part_one(input: &String) -> u32 {
+fn part_one(input: &str) -> u32 {
     string_to_numbers(input)
 }
 
-fn part_two(input: &String) -> u32 {
+fn part_two(input: &str) -> u32 {
     let input = input
         .lines()
         .map(|line| {
@@ -84,7 +84,7 @@ fn part_two(input: &String) -> u32 {
             line.push('\n');
             line
         })
-        .collect();
+        .collect::<String>();
     string_to_numbers(&input)
 }
 
