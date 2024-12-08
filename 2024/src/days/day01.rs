@@ -37,7 +37,9 @@ fn part_two(input: &str) -> usize {
         b.push(entries[1].parse().unwrap());
     });
 
-    a.iter().map(|a| b.iter().filter(|b| b == &a).count() * a).sum()
+    a.iter()
+        .map(|a| b.iter().filter(|b| b == &a).count() * a)
+        .sum()
 }
 
 #[cfg(test)]
