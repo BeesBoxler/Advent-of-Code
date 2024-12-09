@@ -7,25 +7,8 @@ fn part_one(input: &str) -> u32 {
     let mut safe = 0;
 
     input.lines().for_each(|line| {
-        let mut increasing = false;
-        let mut decreasing = false;
-        let mut safe_amount = true;
-
-        line.split_whitespace()
-            .collect::<Vec<&str>>()
-            .windows(2)
-            .for_each(|items| {
-                let a: usize = items[0].parse().unwrap();
-                let b: usize = items[1].parse().unwrap();
-                let diff = a.abs_diff(b);
-
-                increasing |= a > b;
-                decreasing |= a < b;
-                safe_amount &= diff <= 3 && diff > 0;
-            });
-
-        if (increasing ^ decreasing) && safe_amount {
-            safe = safe + 1;
+        if is_valid(line) {
+            safe += 1;
         }
     });
 
@@ -33,7 +16,47 @@ fn part_one(input: &str) -> u32 {
 }
 
 fn part_two(input: &str) -> u32 {
-    0
+    let mut safe = 0;
+
+    input.lines().for_each(|line| {
+        if is_valid(line) {
+            safe += 1;
+        } else {
+            let line: Vec<&str> = line.split_whitespace().collect();
+            for i in 0..line.len() {
+                let line = [&line[..i], &line[i + 1..]].concat().join(" ");
+
+                if is_valid(&line) {
+                    safe += 1;
+
+                    break;
+                };
+            }
+        }
+    });
+
+    safe
+}
+
+fn is_valid(line: &str) -> bool {
+    let mut increasing = false;
+    let mut decreasing = false;
+    let mut safe_amount = true;
+
+    line.split_whitespace()
+        .collect::<Vec<&str>>()
+        .windows(2)
+        .for_each(|items| {
+            let a: usize = items[0].parse().unwrap();
+            let b: usize = items[1].parse().unwrap();
+            let diff = a.abs_diff(b);
+
+            increasing |= a > b;
+            decreasing |= a < b;
+            safe_amount &= diff <= 3 && diff > 0;
+        });
+
+    (increasing ^ decreasing) && safe_amount
 }
 
 #[cfg(test)]
@@ -53,8 +76,7 @@ mod test {
     }
 
     #[test]
-    #[ignore]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 0);
+        assert_eq!(part_two(&INPUT.to_string()), 4);
     }
 }
