@@ -75,7 +75,27 @@ fn part_one(input: &str) -> u32 {
 }
 
 fn part_two(input: &str) -> u32 {
-    0
+    let data: Vec<Vec<char>> = input
+        .lines()
+        .map(|line| line.chars().map(|c| c).collect())
+        .collect();
+    let mut count = 0;
+    for i in 1..data.len() - 1 {
+        for j in 1..data[i].len() - 1 {
+            if data[i][j] == 'A' {
+                let a = data[i - 1][j - 1] == 'M' && data[i + 1][j + 1] == 'S';
+                let b = data[i - 1][j + 1] == 'M' && data[i + 1][j - 1] == 'S';
+                let c = data[i + 1][j - 1] == 'M' && data[i - 1][j + 1] == 'S';
+                let d = data[i + 1][j + 1] == 'M' && data[i - 1][j - 1] == 'S';
+
+                if a && b || a && c || b && d || c && d {
+                    count += 1;
+                }
+            }
+        }
+    }
+
+    count
 }
 
 #[cfg(test)]
@@ -100,8 +120,7 @@ MXMXAXMASX
     }
 
     #[test]
-    #[ignore]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 0);
+        assert_eq!(part_two(&INPUT.to_string()), 9);
     }
 }
