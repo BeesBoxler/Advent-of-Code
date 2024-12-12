@@ -6,7 +6,7 @@ pub fn run(input: String) {
 fn part_one(input: &str) -> u32 {
     let data: Vec<Vec<char>> = input
         .lines()
-        .map(|line| line.chars().map(|c| c).collect())
+        .map(|line| line.chars().collect())
         .collect();
     let mut count = 0;
 
@@ -77,7 +77,7 @@ fn part_one(input: &str) -> u32 {
 fn part_two(input: &str) -> u32 {
     let data: Vec<Vec<char>> = input
         .lines()
-        .map(|line| line.chars().map(|c| c).collect())
+        .map(|line| line.chars().collect())
         .collect();
     let mut count = 0;
     for i in 1..data.len() - 1 {
@@ -88,7 +88,7 @@ fn part_two(input: &str) -> u32 {
                 let c = data[i + 1][j - 1] == 'M' && data[i - 1][j + 1] == 'S';
                 let d = data[i + 1][j + 1] == 'M' && data[i - 1][j - 1] == 'S';
 
-                if a && b || a && c || b && d || c && d {
+                if (d || a) && (c || b) {
                     count += 1;
                 }
             }
