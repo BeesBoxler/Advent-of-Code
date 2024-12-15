@@ -15,7 +15,7 @@ fn part_one(input: &str) -> usize {
             .lines()
             .map(|line| {
                 let (k, v) = line.split_once("|").unwrap();
-                (k.parse().unwrap(), v.parse().unwrap())
+                (k.parse().unwrap(),v.parse().unwrap())
             })
             .collect(),
     );
@@ -30,6 +30,7 @@ fn part_one(input: &str) -> usize {
             let b = graph.iter().position(|&r| r == pair[1]);
 
             a < b
+
         });
 
         if valid {
@@ -37,7 +38,6 @@ fn part_one(input: &str) -> usize {
         }
     });
 
-    dbg!(graph);
     sum
 }
 

@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{cmp::Ordering, collections::HashMap};
 
 pub struct Dag {
     graph: Option<HashMap<usize, Vec<usize>>>,
@@ -22,10 +22,11 @@ impl Dag {
 
     pub fn topological_sort(&self) -> Vec<usize> {
         let nodes = self.graph.as_ref().unwrap().keys();
-        let mut stack: Vec<usize> = vec![];
+        let mut stack = vec![];
+        let mut visited = vec![];
 
         for node in nodes {
-            self.get_order(node, &mut stack);
+            self.get_order(node, &mut stack, &mut visited);
         }
 
         stack.reverse();
@@ -33,17 +34,23 @@ impl Dag {
         stack
     }
 
-    fn get_order(&self, node: &usize, stack: &mut Vec<usize>) {
+    fn get_order(&self, node: &usize, stack: &mut Vec<usize>, visited: &mut Vec<usize>) {
         let nodes = self.graph.as_ref().unwrap().get(node);
 
+        visited.push(*node);
+        
         if nodes.is_some() {
             for value in nodes.unwrap() {
-                self.get_order(value, stack);
+                if !(visited.contains(value)){
+                    self.get_order(value, stack, visited);
+                }
             }
         }
-
+    
+        
         if !stack.contains(node) {
             stack.push(*node);
+            
         }
     }
 }
