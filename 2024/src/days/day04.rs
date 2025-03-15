@@ -4,10 +4,7 @@ pub fn run(input: String) {
 }
 
 fn part_one(input: &str) -> u32 {
-    let data: Vec<Vec<char>> = input
-        .lines()
-        .map(|line| line.chars().collect())
-        .collect();
+    let data: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
     let mut count = 0;
 
     for i in 0..data.len() {
@@ -75,10 +72,7 @@ fn part_one(input: &str) -> u32 {
 }
 
 fn part_two(input: &str) -> u32 {
-    let data: Vec<Vec<char>> = input
-        .lines()
-        .map(|line| line.chars().collect())
-        .collect();
+    let data: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
     let mut count = 0;
     for i in 1..data.len() - 1 {
         for j in 1..data[i].len() - 1 {
@@ -116,11 +110,11 @@ MXMXAXMASX
 
     #[test]
     fn part_one_returns_correct_output() {
-        assert_eq!(part_one(&INPUT.to_string()), 18);
+        assert_eq!(part_one(INPUT), 18);
     }
 
     #[test]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 9);
+        assert_eq!(part_two(INPUT), 9);
     }
 }

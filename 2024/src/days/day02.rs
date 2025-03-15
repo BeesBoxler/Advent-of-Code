@@ -72,11 +72,11 @@ mod test {
 
     #[test]
     fn part_one_returns_correct_output() {
-        assert_eq!(part_one(&INPUT.to_string()), 2);
+        assert_eq!(part_one(INPUT), 2);
     }
 
     #[test]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 4);
+        assert_eq!(part_two(INPUT), 4);
     }
 }

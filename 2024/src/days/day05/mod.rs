@@ -1,48 +1,84 @@
-mod graph;
-
-use graph::Dag;
+use std::collections::HashMap;
 
 pub fn run(input: String) {
     println!("{}", part_one(&input));
     println!("{}", part_two(&input));
 }
 
+fn parse_input(input: &str) -> (HashMap<usize, Vec<usize>>, Vec<Vec<usize>>) {
+    let (rules, sequences) = input.split_once("\n\n").unwrap();
+    let mut ruleset: HashMap<usize, Vec<usize>> = HashMap::new();
+
+    rules.lines().for_each(|line| {
+        let (target, dependent) = line.split_once('|').unwrap();
+        let rule = ruleset.entry(target.parse().unwrap()).or_default();
+        rule.push(dependent.parse().unwrap());
+    });
+
+    let sequences = sequences
+        .lines()
+        .map(|line| line.split(',').map(|item| item.parse().unwrap()).collect())
+        .collect();
+
+    (ruleset, sequences)
+}
+
 fn part_one(input: &str) -> usize {
-    let mut sum = 0;
-    let (edges, data) = input.split_once("\n\n").unwrap();
-    let graph = Dag::create(
-        edges
-            .lines()
-            .map(|line| {
-                let (k, v) = line.split_once("|").unwrap();
-                (k.parse().unwrap(),v.parse().unwrap())
-            })
-            .collect(),
-    );
+    let (ruleset, sequences) = parse_input(input);
+    let mut count = 0;
 
-    data.lines().for_each(|line| {
-        let line = line
-            .split(",")
-            .map(|digit| digit.parse().unwrap())
-            .collect::<Vec<usize>>();
-        let valid = line.windows(2).all(|pair| {
-            let a = graph.iter().position(|&r| r == pair[0]);
-            let b = graph.iter().position(|&r| r == pair[1]);
+    sequences.iter().for_each(|sequence| {
+        let mut failure = false;
 
-            a < b
+        for (i, value) in sequence.iter().enumerate() {
+            for test in &sequence[0..=i] {
+                if test == value {
+                    continue;
+                }
 
-        });
+                if ruleset.get(value).unwrap_or(&Vec::new()).contains(test) {
+                    failure = true;
+                }
+            }
+        }
 
-        if valid {
-            sum += line[line.len() / 2];
+        if !failure {
+            count += sequence[sequence.len() / 2];
         }
     });
 
-    sum
+    count
 }
 
-fn part_two(_input: &str) -> u32 {
-    0
+fn part_two(input: &str) -> usize {
+    let (ruleset, sequences) = parse_input(input);
+
+    sequences
+        .iter()
+        .map(|sequence| {
+            let mut failed = false;
+            let mut sequence = sequence.clone();
+            for i in 0..sequence.len() {
+                for j in 0..i {
+                    if let Some(rules) = ruleset.get(&sequence[i]) {
+                        if rules.contains(&sequence[j]) {
+                            // do the old switcheroo
+                            sequence.swap(i, j);
+                            failed = true;
+                        }
+                    }
+                }
+            }
+
+            if failed {
+                dbg!(&sequence);
+
+                return dbg!(sequence[sequence.len() / 2]);
+            }
+
+            0
+        })
+        .sum()
 }
 
 #[cfg(test)]
@@ -80,12 +116,11 @@ mod test {
 
     #[test]
     fn part_one_returns_correct_output() {
-        assert_eq!(part_one(&INPUT.to_string()), 143);
+        assert_eq!(part_one(INPUT), 143);
     }
 
     #[test]
-    #[ignore]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 0);
+        assert_eq!(part_two(INPUT), 123);
     }
 }

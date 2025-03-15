@@ -10,17 +10,16 @@ fn part_one(input: &str) -> usize {
     let mut direction = Direction::North;
     let mut position = find_initial_position(&data).unwrap();
 
-    while position.0 < data.len() && position.1 < data[0].len() && position.0 > 0 && position.1 > 0 {
+    while position.0 < data.len() && position.1 < data[0].len() && position.0 > 0 && position.1 > 0
+    {
         let next_position = direction.get_next_position(&position);
-        if is_blocked(&data,&next_position) {
+        if is_blocked(&data, &next_position) {
             direction = direction.turn();
         } else {
             data[position.0][position.1] = 'X';
             position = next_position;
         }
     }
-
-    
 
     count_visited_squares(&data)
 }
@@ -40,9 +39,9 @@ fn count_visited_squares(data: &Map) -> usize {
 
 fn find_initial_position(data: &Map) -> Option<(usize, usize)> {
     for (i, row) in data.iter().enumerate() {
-        for  (j, item) in row.iter().enumerate() {
+        for (j, item) in row.iter().enumerate() {
             if *item == '^' {
-                return Some((i,j));
+                return Some((i, j));
             }
         }
     }
@@ -52,7 +51,7 @@ fn find_initial_position(data: &Map) -> Option<(usize, usize)> {
 
 fn is_blocked(data: &Map, position: &(usize, usize)) -> bool {
     if position.0 < data.len() && position.1 < data[0].len() {
-        return data[position.0][position.1] == '#'
+        return data[position.0][position.1] == '#';
     }
 
     false
@@ -81,10 +80,10 @@ impl Direction {
 
     fn get_next_position(&self, position: &(usize, usize)) -> (usize, usize) {
         match self {
-            Direction::North => (position.0-1, position.1),
-            Direction::East => (position.0, position.1+1),
-            Direction::South => (position.0+1, position.1),
-            Direction::West => (position.0, position.1-1),
+            Direction::North => (position.0 - 1, position.1),
+            Direction::East => (position.0, position.1 + 1),
+            Direction::South => (position.0 + 1, position.1),
+            Direction::West => (position.0, position.1 - 1),
         }
     }
 }
@@ -106,12 +105,12 @@ mod test {
 
     #[test]
     fn part_one_returns_correct_output() {
-        assert_eq!(part_one(&INPUT.to_string()), 41);
+        assert_eq!(part_one(INPUT), 41);
     }
 
     #[test]
     #[ignore]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 0);
+        assert_eq!(part_two(INPUT), 0);
     }
 }

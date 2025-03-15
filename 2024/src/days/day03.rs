@@ -33,11 +33,11 @@ mod test {
 
     #[test]
     fn part_one_returns_correct_output() {
-        assert_eq!(part_one(&INPUT.to_string()), 161);
+        assert_eq!(part_one(INPUT), 161);
     }
 
     #[test]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 48);
+        assert_eq!(part_two(INPUT), 48);
     }
 }
