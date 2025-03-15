@@ -27,9 +27,9 @@ fn part_one(input: &str) -> usize {
 
 fn count_visited_squares(data: &Map) -> usize {
     let mut count = 0;
-    for i in 0..data.len() {
-        for j in 0..data[i].len() {
-            if data[i][j] == 'X' {
+    for row in data {
+        for item in row {
+            if *item == 'X' {
                 count += 1;
             }
         }
@@ -39,15 +39,15 @@ fn count_visited_squares(data: &Map) -> usize {
 }
 
 fn find_initial_position(data: &Map) -> Option<(usize, usize)> {
-    for i in 0..data.len() {
-        for j in 0..data[i].len() {
-            if data[i][j] == '^' {
+    for (i, row) in data.iter().enumerate() {
+        for  (j, item) in row.iter().enumerate() {
+            if *item == '^' {
                 return Some((i,j));
             }
         }
     }
 
-    return None;
+    None
 }
 
 fn is_blocked(data: &Map, position: &(usize, usize)) -> bool {
@@ -58,7 +58,7 @@ fn is_blocked(data: &Map, position: &(usize, usize)) -> bool {
     false
 }
 
-fn part_two(input: &str) -> u32 {
+fn part_two(_input: &str) -> u32 {
     0
 }
 
@@ -71,7 +71,7 @@ enum Direction {
 
 impl Direction {
     fn turn(&self) -> Direction {
-        return match self {
+        match self {
             Direction::North => Direction::East,
             Direction::East => Direction::South,
             Direction::South => Direction::West,
@@ -80,7 +80,7 @@ impl Direction {
     }
 
     fn get_next_position(&self, position: &(usize, usize)) -> (usize, usize) {
-        return match self {
+        match self {
             Direction::North => (position.0-1, position.1),
             Direction::East => (position.0, position.1+1),
             Direction::South => (position.0+1, position.1),

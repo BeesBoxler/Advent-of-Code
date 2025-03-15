@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, collections::HashMap};
+use std::collections::HashMap;
 
 pub struct Dag {
     graph: Option<HashMap<usize, Vec<usize>>>,
@@ -9,7 +9,7 @@ impl Dag {
         let mut adjacency_map: HashMap<usize, Vec<usize>> = HashMap::new();
 
         for (k, v) in edges {
-            let node = &mut adjacency_map.entry(k).or_insert(vec![]);
+            let node = &mut adjacency_map.entry(k).or_default();
             node.push(v);
         }
 

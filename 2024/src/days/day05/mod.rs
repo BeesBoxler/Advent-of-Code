@@ -41,7 +41,7 @@ fn part_one(input: &str) -> usize {
     sum
 }
 
-fn part_two(input: &str) -> u32 {
+fn part_two(_input: &str) -> u32 {
     0
 }
 
