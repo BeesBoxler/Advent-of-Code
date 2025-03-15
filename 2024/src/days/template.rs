@@ -3,11 +3,11 @@ pub fn run(input: String) {
     println!("{}", part_two(&input));
 }
 
-fn part_one(input: &str) -> u32 {
+fn part_one(_input: &str) -> u32 {
     0
 }
 
-fn part_two(input: &str) -> u32 {
+fn part_two(_input: &str) -> u32 {
     0
 }
 
