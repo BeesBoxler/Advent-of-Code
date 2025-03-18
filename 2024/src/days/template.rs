@@ -19,12 +19,12 @@ mod test {
 
     #[test]
     fn part_one_returns_correct_output() {
-        assert_eq!(part_one(&INPUT.to_string()), 0);
+        assert_eq!(part_one(INPUT), 0);
     }
 
     #[test]
     #[ignore]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(&INPUT.to_string()), 0);
+        assert_eq!(part_two(INPUT), 0);
     }
 }
