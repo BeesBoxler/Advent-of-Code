@@ -1,9 +1,9 @@
-const MAX: usize = 100;
+const MAX: isize = 100;
 
 #[derive(Debug)]
 struct Instruction {
     direction: Direction,
-    amount: usize,
+    amount: isize,
 }
 
 impl From<&str> for Instruction {
@@ -18,7 +18,7 @@ impl From<&str> for Instruction {
 }
 
 impl Instruction {
-    fn execute(&self, current: usize) -> usize {
+    fn execute(&self, current: isize) -> isize {
         self.direction.execute(self.amount, current)
     }
 }
@@ -40,17 +40,9 @@ impl From<&str> for Direction {
 }
 
 impl Direction {
-    fn execute(&self, a: usize, b: usize) -> usize {
+    fn execute(&self, a: isize, b: isize) -> isize {
         match self {
-            Direction::Left => {
-                if b == 0 {
-                    MAX - a % MAX
-                } else if a > b {
-                    MAX - (a % b)
-                } else {
-                    b - a
-                }
-            }
+            Direction::Left => (b - a).rem_euclid(MAX),
             Direction::Right => (a + b) % MAX,
         }
     }
@@ -77,8 +69,12 @@ fn part_one(input: &str) -> u32 {
     count
 }
 
-fn part_two(_input: &str) -> u32 {
-    0
+fn part_two(input: &str) -> u32 {
+    let mut count = 0;
+    let mut current = 50;
+    let instructions: Vec<Instruction> = input.lines().map(|line| line.into()).collect();
+
+    count
 }
 
 #[cfg(test)]
@@ -102,8 +98,7 @@ L82";
     }
 
     #[test]
-    #[ignore]
     fn part_two_returns_correct_output() {
-        assert_eq!(part_two(INPUT), 0);
+        assert_eq!(part_two(INPUT), 6);
     }
 }
