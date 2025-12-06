@@ -69,10 +69,39 @@ fn part_one(input: &str) -> u32 {
     count
 }
 
-fn part_two(input: &str) -> u32 {
+fn part_two(input: &str) -> isize {
     let mut count = 0;
     let mut current = 50;
     let instructions: Vec<Instruction> = input.lines().map(|line| line.into()).collect();
+
+    for Instruction { amount, direction } in instructions {
+        count += amount / MAX;
+        let rem = amount % MAX;
+
+        match direction {
+            Direction::Left => {
+                if current == 0 {
+                    current = MAX + (current - rem)
+                } else if rem > current {
+                    current = MAX + (current - rem);
+                    count += 1;
+                } else {
+                    current -= rem;
+                }
+            }
+            Direction::Right => {
+                if current + rem > MAX {
+                    count += 1;
+                    current = (current + rem) - MAX;
+                } else {
+                    current = (current + rem) % MAX;
+                }
+            }
+        }
+        if current == 0 {
+            count += 1
+        }
+    }
 
     count
 }
