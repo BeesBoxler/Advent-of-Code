@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 dotenv = "0.15.0"
+fancy-regex = "0.16.2"
+regex = "1.12.2"
