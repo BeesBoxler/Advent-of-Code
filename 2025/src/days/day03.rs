@@ -28,8 +28,27 @@ fn part_one(input: &str) -> usize {
         .sum()
 }
 
-fn part_two(_input: &str) -> usize {
-    0
+fn find_largest(bank: &Vec<usize>, length: usize) -> usize {
+    let mut max = 0;
+    let mut last_index = 0;
+    for i in 0..length {
+        let mut local_max = 0;
+        for j in last_index..=(bank.len() - (12 - i)) {
+            if bank[j] > local_max {
+                local_max = bank[j];
+                last_index = j + 1;
+            }
+        }
+        max = max * 10 + local_max;
+    }
+    max
+}
+
+fn part_two(input: &str) -> usize {
+    parse_input(input)
+        .iter()
+        .map(|bank| find_largest(bank, 12))
+        .sum()
 }
 
 #[cfg(test)]
@@ -47,9 +66,7 @@ mod test {
     }
 
     #[test]
-    #[ignore]
     fn part_two_returns_correct_output() {
         assert_eq!(part_two(INPUT), 3121910778619);
     }
 }
-
