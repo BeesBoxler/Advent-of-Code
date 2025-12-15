@@ -69,3 +69,4 @@ if [[ -z $day ]]; then
 fi
 
 add_day
+git add .
