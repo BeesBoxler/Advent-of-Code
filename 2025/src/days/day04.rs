@@ -63,7 +63,9 @@ fn part_two(input: &str) -> u32 {
     let mut map = parse_input(input);
 
     let mut count = 0;
-    for _ in 0..1000 {
+    let mut prev_count = 1;
+    while count != prev_count {
+        prev_count = count;
         for y in 0..map.len() {
             for x in 0..map[y].len() {
                 if map[y][x] == '@' && count_neighbours(&map, &Point { x, y }) < 4 {
