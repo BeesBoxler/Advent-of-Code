@@ -10,11 +10,7 @@ fn main() {
     let input;
 
     let day = if let Some(day) = args.get(1) {
-        if let Ok(day) = day.parse::<u8>() {
-            Some(day)
-        } else {
-            None
-        }
+        day.parse::<u8>().ok()
     } else {
         None
     };

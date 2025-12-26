@@ -106,7 +106,7 @@ fn parse_input_cephalopod_formatted(input: &str) -> Vec<Problem> {
             if value == 0 || i == lines[0].len() - 1 {
                 problems.push(Problem {
                     operands: values,
-                    operator: operator.clone(),
+                    operator: operator,
                 });
                 values = vec![];
             }
