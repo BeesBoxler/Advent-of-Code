@@ -16,7 +16,10 @@ fn main() {
     };
 
     if let Some(path) = args.get(2) {
-        println!("Loading input file `{:?}`...", fs::canonicalize(path));
+        println!(
+            "Loading input file {:?}...",
+            fs::canonicalize(path).unwrap()
+        );
         input = match fs::read_to_string(path) {
             Ok(i) => i,
             _ => {
